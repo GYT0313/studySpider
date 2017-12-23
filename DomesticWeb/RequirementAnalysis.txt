@@ -1,4 +1,4 @@
-1. 爬取内容:
+﻿1. 爬取内容:
     国内网站排名及其简介
 
 2. 爬取主网站:
@@ -7,9 +7,7 @@
 3. 爬取内容: //div[@class='list']/ul/li
     # 图片url
     image_link
-    div[@class='thumb']/a/img/@src
-
-    # 网站名称
+    div[@class='thumb']/a/img/@data-original    # 网站名称
     web_name
     div[@class='text']/h2/a/text()
 
