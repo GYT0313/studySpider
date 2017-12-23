@@ -9,6 +9,7 @@ import urllib2
 import re
 
 
+
 class Spiser():
     """
         内涵段子爬虫类

@@ -1,0 +1,71 @@
+div{
+	text-align: center;
+	vertical-align: middle;
+	margin-top: 5px;
+}
+.boss{
+	width: 1000px;
+	margin: 20px auto;
+}
+ul{
+	margin: 20px 100px;
+}
+li{
+	position: relative;
+	list-style: none;
+	margin-top: 10px;
+	display: block;
+}
+.thumb{
+	width: 400px;
+	height: 260px;
+	float: left;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+.text{
+	width: 200px;
+	height: 260px;
+	float: left;
+	padding-left: 20px;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+.rank{
+	width: 100px;
+	height: 260px;
+	float: left;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+img{
+	margin-top: 5px;
+	width: 250px;
+	height: 250px;
+}
+li a{
+	display: block;
+	margin: 20px;
+	font-size: 20px;
+	font-weight: bold;
+}
+.top h2{
+	margin-top: 100px;
+}
+.bot{
+	font-size: 15px;
+}
+p{
+	text-align: left;
+	text-indent: 2em;
+	margin-top: 20px;
+}
+a{
+	color: black;
+	text-decoration: none;
+}
+a:hover{
+	color: blue;
+	text-decoration: underline;
+}
+

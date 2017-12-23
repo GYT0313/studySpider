@@ -1,0 +1,82 @@
+# -*- coding: utf-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+import scrapy
+import os
+from settings import IMAGES_STORE as images_store
+from scrapy.pipelines.images import ImagesPipeline
+
+
+class DomesticwebPipeline(object):
+
+    def __init__(self):
+        self.f = open("domesticWeb.html", "w")
+        self.f.write("<html>\n")
+        self.f.write("<head>\n")
+        self.f.write("<meta http-equiv='content-type' content='text/html;charset=utf-8'>\n")
+        # self.f.write("<style type='text/css'>\n")
+        # self.f.write("table tr td,th{border: 1px; solid #000;}\n")
+        # self.f.write("table tr td p{text-indent:2em;}\n")
+        # self.f.write("</style>\n")
+        self.f.write("<link href='style.css' rel='stylesheet' type='text/css' />\n")
+        self.f.write("<head>\n")
+        self.f.write("<body>\n")
+        self.f.write("<div text-align='center'>\n")
+        self.f.write("<table summary='记录中国地区网站排行和其简介'>\n")
+        self.f.write("<caption><strong><h1>2017年中国地区网站排名</h1></strong></caption>")
+        self.f.write("<tr>\n")
+        self.f.write("<th>图片链接</th>\n")
+        self.f.write("<th>网站名称</th>\n")
+        self.f.write("<th>网站地址</th>\n")
+        self.f.write("<th>简介</th>\n")
+        self.f.write("<th>排名</th>\n")
+        self.f.write("</tr>\n")
+
+    def process_item(self, item, spider):
+        self.f.write("<tr>\n")
+        self.f.write("<td><img src='Images/%s.jpg' /></td>\n"%item['web_name'])
+        self.f.write("<td><a href='https://%s' target='_blank'>%s</a></td>\n"%(item['web_link'], item['web_name']))
+        self.f.write("<td>%s</td>\n"%item['web_link'])
+        self.f.write("<td><p>%s</p></td>\n"%item['introduction'])
+        self.f.write("<td>&nbsp;&nbsp;%s&nbsp;&nbsp;</td>\n"%item['web_rank'])
+        self.f.write("</tr>\n")
+        
+        return item
+
+
+    def close_spider(self):
+        self.f.write("</table>\n")
+        self.f.write("</div>\n")
+        self.f.write("</body>\n")
+        self.f.write("</html>\n")
+        self.f.close()
+
+
+class DomesticwebPicturePipeline(ImagesPipeline):
+    # def __init__(self):
+    #     self.f = open("domesticWebPicture.", "w")
+            
+    def get_media_requests(self, item, info):
+        image_link = item['image_link']
+        yield scrapy.Request(image_link)
+
+
+    def item_completed(self, results, item, info):
+        # print results
+        # 
+        # 取出results里图片的路径的值
+        image_path = [x["path"] for ok, x in results if ok]
+
+        os.rename(images_store + image_path[0], images_store + item["web_name"] + ".jpg")
+        return item
+
+    # def close_spider(self):
+    #     self.f.write("</table>\n")
+    #     self.f.write("</div>\n")
+    #     self.f.write("</body>\n")
+    #     self.f.write("</html>\n")
+    #     self.f.close()

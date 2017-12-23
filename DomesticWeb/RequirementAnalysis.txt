@@ -1,0 +1,33 @@
+1. 爬取内容:
+    国内网站排名及其简介
+
+2. 爬取主网站:
+    https://top.aizhan.com/area
+
+3. 爬取内容: //div[@class='list']/ul/li
+    # 图片url
+    image_link
+    div[@class='thumb']/a/img/@src
+
+    # 网站名称
+    web_name
+    div[@class='text']/h2/a/text()
+
+    # 网站地址
+    web_link
+    div[@class='text']/h2/em/text()
+
+    # 网站简介
+    introduction
+    div[@class='text']/p/text()
+
+    # 网站排名
+    web_rank
+    div[@class='rank']/div[@class='top']/text()
+
+
+4. 下一页:
+    //div[@class='page']/ul/li[@class='disabled']/span/text()  == '>'
+
+
+4. 以HTML文件输出
