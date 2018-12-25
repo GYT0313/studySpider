@@ -157,11 +157,12 @@ def getJobInfo(jobs_url):
     for url in jobs_url:
 
         print(url[1])
-        html = get_page_html(url[1])
+        html = str(get_page_html(url[1]))
 
         #html = get_page_html('http://cd.ganji.com/zpshichangyingxiao/2759567089x.htm')
-        
-        # 职位名
+        if html == None:
+            continue
+        # 职位
         jobname = re.search(r'<div class="title-line clearfix">[\s\S]*?<p>([\s\S]*?)</p>([\s\S]*?)</div>', html, re.M|re.I)
         if jobname == None:
             jobname = 'null'
@@ -200,7 +201,9 @@ def getJobInfo(jobs_url):
         # 打印
         flag = flag + 1
         if (flag % 100) == 0:
-            print('已存储: %s' % (flag))
+            print('='*20, end='')
+            print(' 已存储: %s ' % (flag), end='')
+            print('='*20)
 
 
 
