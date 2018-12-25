@@ -72,11 +72,12 @@ def getJobsURL(types_url):
         getJobURL(type_html)
 
         current_html = type_html
-        # 获取类别的下一页，循环次数为NEXT_PAGE_NUM
+        # 获取类别的下一页，循环次数为NEXT_PAGE_NUM  ----- 如果需要爬取所有子页可以将数值设置为很大，也可以不设置数值，直接获取 "下一页"的url，直到没有
         for i in range(NEXT_PAGE_NUM):
             #print(current_html)
             current_html = getNextPage(current_html)    # 返回值为当前页的下一页作为下次循环的当前页
-        
+            if current_html == None:
+                break
 
 
 def getJobURL(type_html):
