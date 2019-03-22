@@ -72,7 +72,6 @@ def getJobsURL(types_url):
         getJobURL(type_html)
 
         current_html = type_html
-        # 获取类别的下一页，循环次数为NEXT_PAGE_NUM  ----- 如果需要爬取所有子页可以将数值设置为很大，也可以不设置数值，直接获取 "下一页"的url，直到没有
         # 获取类别的下一页，循环次数为NEXT_PAGE_NUM
         for i in range(NEXT_PAGE_NUM):
             #print(current_html)
@@ -192,6 +191,7 @@ def getJobInfo(jobs_url):
         else:
             location = location.group(1).strip().replace(' ', '')
 
+        if jobname == 'null' and salary == 'null' and company == 'null' and location == 'null':
             print("^"*20)
             print("需要验证（如果无需验证直接回车）...")
             print("验证后回车继续...", end='')
