@@ -72,7 +72,7 @@ def getJobsURL(types_url):
         getJobURL(type_html)
 
         current_html = type_html
-        # 获取类别的下一页，循环次数为NEXT_PAGE_NUM
+        # 获取类别的下一页，循环次数为NEXT_PAGE_NUM(在config.py-默认=99)
         for i in range(NEXT_PAGE_NUM):
             #print(current_html)
             current_html = getNextPage(current_html)    # 返回值为当前页的下一页作为下次循环的当前页
@@ -154,7 +154,9 @@ def getJobInfo(jobs_url):
     """
     print('$'*100)
     print('获取工作详细信息中...')
-    flag = 0
+    flag = 0 # 已存储数量
+    test_flag = 0 # 验证提醒(假设连续3次null，则提示验证，某些工作可能会遗漏爬取，但数量极少)
+
     for url in jobs_url:
 
         print(url[1])
@@ -191,20 +193,25 @@ def getJobInfo(jobs_url):
         else:
             location = location.group(1).strip().replace(' ', '')
 
+        # 验证判断
         if jobname == 'null' and salary == 'null' and company == 'null' and location == 'null':
-            print("^"*20)
-            print("需要验证（如果无需验证直接回车）...")
-            print("验证后回车继续...", end='')
-            input()
-            print("/n^"*20)
+            test_flag += 1
+            if test_flag == 3:
+                print("^"*20)
+                print("需要验证（如果无需验证直接回车）...")
+                print("验证后回车继续...", end='')
+                input()
+                print("/n^"*20)
+                test_flag = 0
             continue
-
+        # 工作信息字典
         data = {
             'name': jobname,
             'salary': salary,
             'company': company,
             'location': location
         }
+        # 向数据库插入data 中的数据
         mysql.insert('jobs_info', data)
 
         # 打印
