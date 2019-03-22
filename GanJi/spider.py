@@ -73,6 +73,7 @@ def getJobsURL(types_url):
 
         current_html = type_html
         # 获取类别的下一页，循环次数为NEXT_PAGE_NUM  ----- 如果需要爬取所有子页可以将数值设置为很大，也可以不设置数值，直接获取 "下一页"的url，直到没有
+        # 获取类别的下一页，循环次数为NEXT_PAGE_NUM
         for i in range(NEXT_PAGE_NUM):
             #print(current_html)
             current_html = getNextPage(current_html)    # 返回值为当前页的下一页作为下次循环的当前页
@@ -191,6 +192,13 @@ def getJobInfo(jobs_url):
         else:
             location = location.group(1).strip().replace(' ', '')
 
+            print("^"*20)
+            print("需要验证（如果无需验证直接回车）...")
+            print("验证后回车继续...", end='')
+            input()
+            print("/n^"*20)
+            continue
+
         data = {
             'name': jobname,
             'salary': salary,
@@ -221,7 +229,7 @@ def main():
         print('获取首页失败!')
         exit(0)
     #print(html)
-    print('hhab')
+
     # 2.提取HTML代码，获得成都招聘热门职位的URL，并加入MySQL
     getTypeURL(html)
 
